@@ -56,8 +56,10 @@ def examination(problem_set):
     total_number = len(problem_set)
     
     key = {"a":0,"s":1,"d":2,"f":3,'g':4,
-           "1":0,"2":1,"3":2,"4":3,"5":4}
+           "1":0,"2":1,"3":2,"4":3,"5":4,'\t':-1}
     number_of_correct = 0
+    not_sure_problem = []
+    wrong_problem = []
 
     for problem_num, problem in enumerate(problem_set):
         if random.randint(0,2) == 0:
@@ -84,22 +86,43 @@ def examination(problem_set):
             ch = getkey()
             if ch == 'q':
                 print ""
-                return number_of_correct,problem_num
+                return number_of_correct,problem_num,not_sure_problem,wrong_problem
             if ch in key:
                 break
 
         if key[ch] == correct_choice:
             print "Correct"
             number_of_correct += 1
+        elif key[ch] == -1:
+            not_sure_problem.append(problem)
+            print "The answer is",chr(ord('A')+correct_choice)
         else:
+            wrong_problem.append(problem)
             print "WRONG"
             print "The answer is",chr(ord('A')+correct_choice)
 
         print "" 
 
-    return correct_choice,total_number       
+    return number_of_correct,total_number,not_sure_problem,wrong_problem
         
+def print_res(cnum, tnum, not_sure, wrong, fp):
+    fp.write("Result: %d/%d %.2f%%.\n\n" %(cnum, tnum, cnum * 100.0 / tnum))
+    fp.write("There are %d not sure problems:\n" %(len(not_sure)))
+    for problem in not_sure:
+        fp.write("%s    %s\n" %(problem[0], problem[1]))
+    
+    print ""
 
+    fp.write("There are %d wrong problems:\n" %(len(wrong)))
+    for problem in wrong:
+        fp.write("%s    %s\n" %(problem[0], problem[1]))
+
+def get_output_file_name():
+    fname = "result"
+    suffix = 0
+    while os.path.exists(fname+str(suffix)):
+        suffix += 1
+    return fname + str(suffix)
 
 if __name__=="__main__":
     if len(sys.argv) == 1:
@@ -111,7 +134,8 @@ if __name__=="__main__":
     problem_set = init(file_name)
     random.shuffle(problem_set)
     
-    cnum,tnum = examination(problem_set)
+    cnum,tnum,not_sure,wrong = examination(problem_set)
     if tnum > 0:
-        print "Result: %d/%d %.2f%%." %(cnum, tnum, cnum * 100.0 / tnum)
+        print_res(cnum,tnum,not_sure, wrong, sys.stdout)
+        print_res(cnum,tnum,not_sure, wrong, open(get_output_file_name(), "w"))
 
