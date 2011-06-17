@@ -64,10 +64,10 @@ def examination(problem_set):
         question,answer = problem
         print "Question %d/%d:" %(problem_num+1, total_number)
         print question.upper()
-        choice = [""] * 4
-        correct_choice = random.randint(0,3)
+        choice = [""] * 5
+        correct_choice = random.randint(0,4)
         choice[correct_choice] = answer
-        for i in range(0,4):
+        for i in range(0,5):
             if choice[i] == "":
                 wrong_choice = problem_num
                 while wrong_choice == problem_num:
