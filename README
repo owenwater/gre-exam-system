@@ -2,4 +2,7 @@
 Do not use ana1, lots of format error.
 
 use asdfg or 12345 to select ABCDE
+use tab if you don't know the answer
 and q to quit
+
+it will print the incorrect problem after exam on screen and write to file "result[num]"
