@@ -49,13 +49,14 @@ def getkey():
 def examination(problem_set):
     """Examination
     """
-    print "press a,s,d,f to choose A,B,C,D"
+    print "press a,s,d,f,g or 1,2,3,4,5 to choose A,B,C,D,E"
     print "q to quit"
     print "Start"
     print ""
     total_number = len(problem_set)
     
-    key = {"a":0,"s":1,"d":2,"f":3}
+    key = {"a":0,"s":1,"d":2,"f":3,'g':4,
+           "1":0,"2":1,"3":2,"4":3,"5":4}
     number_of_correct = 0
 
     for problem_num, problem in enumerate(problem_set):
