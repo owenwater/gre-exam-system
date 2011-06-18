@@ -80,7 +80,7 @@ def examination(problem_set):
                         if choice[i] == choice[j]:
                             wrong_choice = problem_num
                             break
-            print "%s): %s" %(chr(ord('A')+i), choice[i])
+            print "%s) %s" %(chr(ord('A')+i), choice[i])
         
         while True:
             ch = getkey()
